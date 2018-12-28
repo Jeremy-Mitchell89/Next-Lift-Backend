@@ -1,0 +1,6 @@
+endpoint: https://eu1.prisma.sh/jeremy-c-mitchell/Lift/dev
+datamodel: datamodel.prisma
+
+hooks:
+  post-deploy:
+    - graphql get-schema -p prisma
