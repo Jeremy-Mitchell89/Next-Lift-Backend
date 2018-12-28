@@ -1,17 +1,15 @@
-const { GraphQLServer } = require("graphql-yoga");
-const Mutation = require("./resolvers/Mutation");
-const Query = require("./resolvers/Query");
+const createServer = require("./createServer");
+const db = require("./db");
+const server = createServer();
 
-const server = new GraphQLServer({
-  typeDefs: "src/schema.graphql",
-  resolvers: {
-    Mutation,
-    Query
+server.start(
+  {
+    cors: {
+      credentials: true,
+      origin: process.env.FRONTEND_URL
+    }
   },
-  resolverValidationOptions: {
-    requireResolversForResolveType: false
-  },
-  context: req => ({ ...req })
-});
-
-server.start(() => console.log("Server Started"));
+  deets => {
+    console.log(`Server is now running on port http://localhost:${deets.port}`);
+  }
+);

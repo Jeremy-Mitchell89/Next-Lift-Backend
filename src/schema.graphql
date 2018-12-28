@@ -1,14 +1,9 @@
-# import Log from "./generated/prisma.graphql"
+# import * from './generated/prisma.graphql'
 
 type Mutation {
   signup(email: String!, password: String!, name: String!): User!
 }
 
 type Query {
-  me: User
-}
-
-type User {
-  id: ID!
-  name: String!
+  me: User!
 }
