@@ -3,6 +3,7 @@
 type Mutation {
   signup(email: String!, password: String!, name: String!): User!
   signin(email: String!, password: String!): User!
+  updateLifts(benchPress: Int, squat: Int, deadLift: Int, press: Int): User!
 }
 
 type Query {

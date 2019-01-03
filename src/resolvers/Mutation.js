@@ -36,7 +36,8 @@ const mutations = {
     });
     console.log(user);
     return user;
-  }
+  },
+  async updateLifts(parent, args, ctx, info) {}
 };
 
 module.exports = mutations;

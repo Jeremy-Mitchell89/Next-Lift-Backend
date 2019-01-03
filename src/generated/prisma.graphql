@@ -1,5 +1,5 @@
 # source: https://eu1.prisma.sh/jeremy-c-mitchell/Lift/dev
-# timestamp: Thu Dec 27 2018 21:01:34 GMT-0600 (Central Standard Time)
+# timestamp: Wed Jan 02 2019 19:42:42 GMT-0600 (Central Standard Time)
 
 type AggregateUser {
   count: Int!
@@ -85,6 +85,10 @@ type User implements Node {
   resetToken: String
   resetTokenExpiry: String
   permissions: [Permission!]!
+  benchPress: Int
+  squat: Int
+  deadLift: Int
+  press: Int
 }
 
 """A connection to a list of items."""
@@ -103,6 +107,10 @@ input UserCreateInput {
   password: String!
   resetToken: String
   resetTokenExpiry: String
+  benchPress: Int
+  squat: Int
+  deadLift: Int
+  press: Int
   permissions: UserCreatepermissionsInput
 }
 
@@ -132,6 +140,14 @@ enum UserOrderByInput {
   resetToken_DESC
   resetTokenExpiry_ASC
   resetTokenExpiry_DESC
+  benchPress_ASC
+  benchPress_DESC
+  squat_ASC
+  squat_DESC
+  deadLift_ASC
+  deadLift_DESC
+  press_ASC
+  press_DESC
   updatedAt_ASC
   updatedAt_DESC
   createdAt_ASC
@@ -146,6 +162,10 @@ type UserPreviousValues {
   resetToken: String
   resetTokenExpiry: String
   permissions: [Permission!]!
+  benchPress: Int
+  squat: Int
+  deadLift: Int
+  press: Int
 }
 
 type UserSubscriptionPayload {
@@ -193,6 +213,10 @@ input UserUpdateInput {
   password: String
   resetToken: String
   resetTokenExpiry: String
+  benchPress: Int
+  squat: Int
+  deadLift: Int
+  press: Int
   permissions: UserUpdatepermissionsInput
 }
 
@@ -202,6 +226,10 @@ input UserUpdateManyMutationInput {
   password: String
   resetToken: String
   resetTokenExpiry: String
+  benchPress: Int
+  squat: Int
+  deadLift: Int
+  press: Int
   permissions: UserUpdatepermissionsInput
 }
 
@@ -458,6 +486,94 @@ input UserWhereInput {
 
   """All values not ending with the given string."""
   resetTokenExpiry_not_ends_with: String
+  benchPress: Int
+
+  """All values that are not equal to given value."""
+  benchPress_not: Int
+
+  """All values that are contained in given list."""
+  benchPress_in: [Int!]
+
+  """All values that are not contained in given list."""
+  benchPress_not_in: [Int!]
+
+  """All values less than the given value."""
+  benchPress_lt: Int
+
+  """All values less than or equal the given value."""
+  benchPress_lte: Int
+
+  """All values greater than the given value."""
+  benchPress_gt: Int
+
+  """All values greater than or equal the given value."""
+  benchPress_gte: Int
+  squat: Int
+
+  """All values that are not equal to given value."""
+  squat_not: Int
+
+  """All values that are contained in given list."""
+  squat_in: [Int!]
+
+  """All values that are not contained in given list."""
+  squat_not_in: [Int!]
+
+  """All values less than the given value."""
+  squat_lt: Int
+
+  """All values less than or equal the given value."""
+  squat_lte: Int
+
+  """All values greater than the given value."""
+  squat_gt: Int
+
+  """All values greater than or equal the given value."""
+  squat_gte: Int
+  deadLift: Int
+
+  """All values that are not equal to given value."""
+  deadLift_not: Int
+
+  """All values that are contained in given list."""
+  deadLift_in: [Int!]
+
+  """All values that are not contained in given list."""
+  deadLift_not_in: [Int!]
+
+  """All values less than the given value."""
+  deadLift_lt: Int
+
+  """All values less than or equal the given value."""
+  deadLift_lte: Int
+
+  """All values greater than the given value."""
+  deadLift_gt: Int
+
+  """All values greater than or equal the given value."""
+  deadLift_gte: Int
+  press: Int
+
+  """All values that are not equal to given value."""
+  press_not: Int
+
+  """All values that are contained in given list."""
+  press_in: [Int!]
+
+  """All values that are not contained in given list."""
+  press_not_in: [Int!]
+
+  """All values less than the given value."""
+  press_lt: Int
+
+  """All values less than or equal the given value."""
+  press_lte: Int
+
+  """All values greater than the given value."""
+  press_gt: Int
+
+  """All values greater than or equal the given value."""
+  press_gte: Int
 }
 
 input UserWhereUniqueInput {

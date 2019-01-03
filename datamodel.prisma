@@ -14,5 +14,9 @@ type User {
   password: String!
   resetToken: String
   resetTokenExpiry: String
-  permissions: [Permission]
+  permissions: [Permission!]!
+  benchPress: Int @default(value: "100")
+  squat: Int @default(value: "100")
+  deadLift: Int @default(value: "100")
+  press: Int @default(value: "100")
 }
