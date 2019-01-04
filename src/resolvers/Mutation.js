@@ -37,7 +37,21 @@ const mutations = {
     console.log(user);
     return user;
   },
-  async updateLifts(parent, args, ctx, info) {}
+  async updateLifts(parent, args, ctx, info) {
+    console.log(args);
+    return ctx.db.mutation.updateUser(
+      {
+        data: {
+          benchPress: args.benchPress,
+          deadLift: args.deadLift,
+          squat: args.squat,
+          press: args.press
+        },
+        where: { id: ctx.request.user.id }
+      },
+      info
+    );
+  }
 };
 
 module.exports = mutations;
