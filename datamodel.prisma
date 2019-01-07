@@ -20,3 +20,11 @@ type User {
   deadLift: Int @default(value: "100")
   press: Int @default(value: "100")
 }
+
+type Movement {
+  id: ID! @unique
+  name: String! @unique
+  description: String!
+  primaryMuscleWorked: String!
+  secondaryMuscleWorked: String
+}

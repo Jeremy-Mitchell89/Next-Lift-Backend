@@ -51,6 +51,9 @@ const mutations = {
       },
       info
     );
+  },
+  async createMove(parent, args, ctx, info) {
+    return ctx.db.mutation.createMovement({ data: { ...args } }, info);
   }
 };
 

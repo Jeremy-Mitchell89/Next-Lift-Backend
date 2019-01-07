@@ -4,6 +4,12 @@ type Mutation {
   signup(email: String!, password: String!, name: String!): User!
   signin(email: String!, password: String!): User!
   updateLifts(benchPress: Int, squat: Int, deadLift: Int, press: Int): User!
+  createMove(
+    name: String!
+    description: String!
+    primaryMuscleWorked: String!
+    secondaryMuscleWorked: String
+  ): Movement!
 }
 
 type Query {

@@ -1,5 +1,9 @@
 # source: https://eu1.prisma.sh/jeremy-c-mitchell/Lift/dev
-# timestamp: Wed Jan 02 2019 19:42:42 GMT-0600 (Central Standard Time)
+# timestamp: Sun Jan 06 2019 17:34:39 GMT-0600 (Central Standard Time)
+
+type AggregateMovement {
+  count: Int!
+}
 
 type AggregateUser {
   count: Int!
@@ -16,13 +20,347 @@ Long can represent values between -(2^63) and 2^63 - 1.
 """
 scalar Long
 
+type Movement implements Node {
+  id: ID!
+  name: String!
+  description: String!
+  primaryMuscleWorked: String!
+  secondaryMuscleWorked: String
+}
+
+"""A connection to a list of items."""
+type MovementConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [MovementEdge]!
+  aggregate: AggregateMovement!
+}
+
+input MovementCreateInput {
+  name: String!
+  description: String!
+  primaryMuscleWorked: String!
+  secondaryMuscleWorked: String
+}
+
+"""An edge in a connection."""
+type MovementEdge {
+  """The item at the end of the edge."""
+  node: Movement!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum MovementOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+  description_ASC
+  description_DESC
+  primaryMuscleWorked_ASC
+  primaryMuscleWorked_DESC
+  secondaryMuscleWorked_ASC
+  secondaryMuscleWorked_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type MovementPreviousValues {
+  id: ID!
+  name: String!
+  description: String!
+  primaryMuscleWorked: String!
+  secondaryMuscleWorked: String
+}
+
+type MovementSubscriptionPayload {
+  mutation: MutationType!
+  node: Movement
+  updatedFields: [String!]
+  previousValues: MovementPreviousValues
+}
+
+input MovementSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [MovementSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [MovementSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [MovementSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: MovementWhereInput
+}
+
+input MovementUpdateInput {
+  name: String
+  description: String
+  primaryMuscleWorked: String
+  secondaryMuscleWorked: String
+}
+
+input MovementUpdateManyMutationInput {
+  name: String
+  description: String
+  primaryMuscleWorked: String
+  secondaryMuscleWorked: String
+}
+
+input MovementWhereInput {
+  """Logical AND on all given filters."""
+  AND: [MovementWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [MovementWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [MovementWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+  description: String
+
+  """All values that are not equal to given value."""
+  description_not: String
+
+  """All values that are contained in given list."""
+  description_in: [String!]
+
+  """All values that are not contained in given list."""
+  description_not_in: [String!]
+
+  """All values less than the given value."""
+  description_lt: String
+
+  """All values less than or equal the given value."""
+  description_lte: String
+
+  """All values greater than the given value."""
+  description_gt: String
+
+  """All values greater than or equal the given value."""
+  description_gte: String
+
+  """All values containing the given string."""
+  description_contains: String
+
+  """All values not containing the given string."""
+  description_not_contains: String
+
+  """All values starting with the given string."""
+  description_starts_with: String
+
+  """All values not starting with the given string."""
+  description_not_starts_with: String
+
+  """All values ending with the given string."""
+  description_ends_with: String
+
+  """All values not ending with the given string."""
+  description_not_ends_with: String
+  primaryMuscleWorked: String
+
+  """All values that are not equal to given value."""
+  primaryMuscleWorked_not: String
+
+  """All values that are contained in given list."""
+  primaryMuscleWorked_in: [String!]
+
+  """All values that are not contained in given list."""
+  primaryMuscleWorked_not_in: [String!]
+
+  """All values less than the given value."""
+  primaryMuscleWorked_lt: String
+
+  """All values less than or equal the given value."""
+  primaryMuscleWorked_lte: String
+
+  """All values greater than the given value."""
+  primaryMuscleWorked_gt: String
+
+  """All values greater than or equal the given value."""
+  primaryMuscleWorked_gte: String
+
+  """All values containing the given string."""
+  primaryMuscleWorked_contains: String
+
+  """All values not containing the given string."""
+  primaryMuscleWorked_not_contains: String
+
+  """All values starting with the given string."""
+  primaryMuscleWorked_starts_with: String
+
+  """All values not starting with the given string."""
+  primaryMuscleWorked_not_starts_with: String
+
+  """All values ending with the given string."""
+  primaryMuscleWorked_ends_with: String
+
+  """All values not ending with the given string."""
+  primaryMuscleWorked_not_ends_with: String
+  secondaryMuscleWorked: String
+
+  """All values that are not equal to given value."""
+  secondaryMuscleWorked_not: String
+
+  """All values that are contained in given list."""
+  secondaryMuscleWorked_in: [String!]
+
+  """All values that are not contained in given list."""
+  secondaryMuscleWorked_not_in: [String!]
+
+  """All values less than the given value."""
+  secondaryMuscleWorked_lt: String
+
+  """All values less than or equal the given value."""
+  secondaryMuscleWorked_lte: String
+
+  """All values greater than the given value."""
+  secondaryMuscleWorked_gt: String
+
+  """All values greater than or equal the given value."""
+  secondaryMuscleWorked_gte: String
+
+  """All values containing the given string."""
+  secondaryMuscleWorked_contains: String
+
+  """All values not containing the given string."""
+  secondaryMuscleWorked_not_contains: String
+
+  """All values starting with the given string."""
+  secondaryMuscleWorked_starts_with: String
+
+  """All values not starting with the given string."""
+  secondaryMuscleWorked_not_starts_with: String
+
+  """All values ending with the given string."""
+  secondaryMuscleWorked_ends_with: String
+
+  """All values not ending with the given string."""
+  secondaryMuscleWorked_not_ends_with: String
+}
+
+input MovementWhereUniqueInput {
+  id: ID
+  name: String
+}
+
 type Mutation {
   createUser(data: UserCreateInput!): User!
+  createMovement(data: MovementCreateInput!): Movement!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
+  updateMovement(data: MovementUpdateInput!, where: MovementWhereUniqueInput!): Movement
   deleteUser(where: UserWhereUniqueInput!): User
+  deleteMovement(where: MovementWhereUniqueInput!): Movement
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
+  upsertMovement(where: MovementWhereUniqueInput!, create: MovementCreateInput!, update: MovementUpdateInput!): Movement!
   updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
+  updateManyMovements(data: MovementUpdateManyMutationInput!, where: MovementWhereInput): BatchPayload!
   deleteManyUsers(where: UserWhereInput): BatchPayload!
+  deleteManyMovements(where: MovementWhereInput): BatchPayload!
 }
 
 enum MutationType {
@@ -63,8 +401,11 @@ enum Permission {
 
 type Query {
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
+  movements(where: MovementWhereInput, orderBy: MovementOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Movement]!
   user(where: UserWhereUniqueInput!): User
+  movement(where: MovementWhereUniqueInput!): Movement
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
+  movementsConnection(where: MovementWhereInput, orderBy: MovementOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): MovementConnection!
 
   """Fetches an object given its ID"""
   node(
@@ -75,6 +416,7 @@ type Query {
 
 type Subscription {
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
+  movement(where: MovementSubscriptionWhereInput): MovementSubscriptionPayload
 }
 
 type User implements Node {
