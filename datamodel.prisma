@@ -28,3 +28,18 @@ type Movement {
   primaryMuscleWorked: String!
   secondaryMuscleWorked: String
 }
+
+type Log {
+  id: ID! @unique
+  title: String!
+  notes: String!
+  movements: [Move]
+  user: User!
+}
+
+type Move {
+  id: ID! @unique
+  weight: [Int]!
+  reps: [Int]!
+  log: Log!
+}

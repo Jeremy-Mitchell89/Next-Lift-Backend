@@ -54,6 +54,16 @@ const mutations = {
   },
   async createMove(parent, args, ctx, info) {
     return ctx.db.mutation.createMovement({ data: { ...args } }, info);
+  },
+  async createLog(parent, args, ctx, info) {
+    const log = await ctx.db.mutation.createLog(
+      {
+        data: { user: { connect: { id: ctx.request.userId } }, ...args }
+      },
+      info
+    );
+    console.log(log);
+    return log;
   }
 };
 

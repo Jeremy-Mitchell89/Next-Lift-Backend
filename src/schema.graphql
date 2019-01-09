@@ -10,6 +10,7 @@ type Mutation {
     primaryMuscleWorked: String!
     secondaryMuscleWorked: String
   ): Movement!
+  createLog(title: String!, notes: String!): Log!
 }
 
 type Query {
@@ -23,4 +24,13 @@ type Query {
     first: Int
     last: Int
   ): [Movement]!
+  logs(
+    where: LogWhereInput
+    orderBy: LogOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): [Log]!
 }

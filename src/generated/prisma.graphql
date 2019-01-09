@@ -1,5 +1,13 @@
 # source: https://eu1.prisma.sh/jeremy-c-mitchell/Lift/dev
-# timestamp: Sun Jan 06 2019 17:34:39 GMT-0600 (Central Standard Time)
+# timestamp: Tue Jan 08 2019 19:15:33 GMT-0600 (Central Standard Time)
+
+type AggregateLog {
+  count: Int!
+}
+
+type AggregateMove {
+  count: Int!
+}
 
 type AggregateMovement {
   count: Int!
@@ -14,11 +22,333 @@ type BatchPayload {
   count: Long!
 }
 
+type Log implements Node {
+  id: ID!
+  title: String!
+  notes: String!
+  movements(where: MoveWhereInput, orderBy: MoveOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Move!]
+  user: User!
+}
+
+"""A connection to a list of items."""
+type LogConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [LogEdge]!
+  aggregate: AggregateLog!
+}
+
+input LogCreateInput {
+  title: String!
+  notes: String!
+  movements: MoveCreateManyWithoutLogInput
+  user: UserCreateOneInput!
+}
+
+input LogCreateOneWithoutMovementsInput {
+  create: LogCreateWithoutMovementsInput
+  connect: LogWhereUniqueInput
+}
+
+input LogCreateWithoutMovementsInput {
+  title: String!
+  notes: String!
+  user: UserCreateOneInput!
+}
+
+"""An edge in a connection."""
+type LogEdge {
+  """The item at the end of the edge."""
+  node: Log!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum LogOrderByInput {
+  id_ASC
+  id_DESC
+  title_ASC
+  title_DESC
+  notes_ASC
+  notes_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type LogPreviousValues {
+  id: ID!
+  title: String!
+  notes: String!
+}
+
+type LogSubscriptionPayload {
+  mutation: MutationType!
+  node: Log
+  updatedFields: [String!]
+  previousValues: LogPreviousValues
+}
+
+input LogSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [LogSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [LogSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [LogSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: LogWhereInput
+}
+
+input LogUpdateInput {
+  title: String
+  notes: String
+  movements: MoveUpdateManyWithoutLogInput
+  user: UserUpdateOneRequiredInput
+}
+
+input LogUpdateManyMutationInput {
+  title: String
+  notes: String
+}
+
+input LogUpdateOneRequiredWithoutMovementsInput {
+  create: LogCreateWithoutMovementsInput
+  connect: LogWhereUniqueInput
+  update: LogUpdateWithoutMovementsDataInput
+  upsert: LogUpsertWithoutMovementsInput
+}
+
+input LogUpdateWithoutMovementsDataInput {
+  title: String
+  notes: String
+  user: UserUpdateOneRequiredInput
+}
+
+input LogUpsertWithoutMovementsInput {
+  update: LogUpdateWithoutMovementsDataInput!
+  create: LogCreateWithoutMovementsInput!
+}
+
+input LogWhereInput {
+  """Logical AND on all given filters."""
+  AND: [LogWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [LogWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [LogWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  title: String
+
+  """All values that are not equal to given value."""
+  title_not: String
+
+  """All values that are contained in given list."""
+  title_in: [String!]
+
+  """All values that are not contained in given list."""
+  title_not_in: [String!]
+
+  """All values less than the given value."""
+  title_lt: String
+
+  """All values less than or equal the given value."""
+  title_lte: String
+
+  """All values greater than the given value."""
+  title_gt: String
+
+  """All values greater than or equal the given value."""
+  title_gte: String
+
+  """All values containing the given string."""
+  title_contains: String
+
+  """All values not containing the given string."""
+  title_not_contains: String
+
+  """All values starting with the given string."""
+  title_starts_with: String
+
+  """All values not starting with the given string."""
+  title_not_starts_with: String
+
+  """All values ending with the given string."""
+  title_ends_with: String
+
+  """All values not ending with the given string."""
+  title_not_ends_with: String
+  notes: String
+
+  """All values that are not equal to given value."""
+  notes_not: String
+
+  """All values that are contained in given list."""
+  notes_in: [String!]
+
+  """All values that are not contained in given list."""
+  notes_not_in: [String!]
+
+  """All values less than the given value."""
+  notes_lt: String
+
+  """All values less than or equal the given value."""
+  notes_lte: String
+
+  """All values greater than the given value."""
+  notes_gt: String
+
+  """All values greater than or equal the given value."""
+  notes_gte: String
+
+  """All values containing the given string."""
+  notes_contains: String
+
+  """All values not containing the given string."""
+  notes_not_contains: String
+
+  """All values starting with the given string."""
+  notes_starts_with: String
+
+  """All values not starting with the given string."""
+  notes_not_starts_with: String
+
+  """All values ending with the given string."""
+  notes_ends_with: String
+
+  """All values not ending with the given string."""
+  notes_not_ends_with: String
+  movements_every: MoveWhereInput
+  movements_some: MoveWhereInput
+  movements_none: MoveWhereInput
+  user: UserWhereInput
+}
+
+input LogWhereUniqueInput {
+  id: ID
+}
+
 """
 The `Long` scalar type represents non-fractional signed whole numeric values.
 Long can represent values between -(2^63) and 2^63 - 1.
 """
 scalar Long
+
+type Move implements Node {
+  id: ID!
+  weight: [Int!]!
+  reps: [Int!]!
+  log: Log!
+}
+
+"""A connection to a list of items."""
+type MoveConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [MoveEdge]!
+  aggregate: AggregateMove!
+}
+
+input MoveCreateInput {
+  weight: MoveCreateweightInput
+  reps: MoveCreaterepsInput
+  log: LogCreateOneWithoutMovementsInput!
+}
+
+input MoveCreateManyWithoutLogInput {
+  create: [MoveCreateWithoutLogInput!]
+  connect: [MoveWhereUniqueInput!]
+}
+
+input MoveCreaterepsInput {
+  set: [Int!]
+}
+
+input MoveCreateweightInput {
+  set: [Int!]
+}
+
+input MoveCreateWithoutLogInput {
+  weight: MoveCreateweightInput
+  reps: MoveCreaterepsInput
+}
+
+"""An edge in a connection."""
+type MoveEdge {
+  """The item at the end of the edge."""
+  node: Move!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
 
 type Movement implements Node {
   id: ID!
@@ -348,19 +678,248 @@ input MovementWhereUniqueInput {
   name: String
 }
 
+enum MoveOrderByInput {
+  id_ASC
+  id_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type MovePreviousValues {
+  id: ID!
+  weight: [Int!]!
+  reps: [Int!]!
+}
+
+input MoveScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [MoveScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [MoveScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [MoveScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+}
+
+type MoveSubscriptionPayload {
+  mutation: MutationType!
+  node: Move
+  updatedFields: [String!]
+  previousValues: MovePreviousValues
+}
+
+input MoveSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [MoveSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [MoveSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [MoveSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: MoveWhereInput
+}
+
+input MoveUpdateInput {
+  weight: MoveUpdateweightInput
+  reps: MoveUpdaterepsInput
+  log: LogUpdateOneRequiredWithoutMovementsInput
+}
+
+input MoveUpdateManyDataInput {
+  weight: MoveUpdateweightInput
+  reps: MoveUpdaterepsInput
+}
+
+input MoveUpdateManyMutationInput {
+  weight: MoveUpdateweightInput
+  reps: MoveUpdaterepsInput
+}
+
+input MoveUpdateManyWithoutLogInput {
+  create: [MoveCreateWithoutLogInput!]
+  connect: [MoveWhereUniqueInput!]
+  disconnect: [MoveWhereUniqueInput!]
+  delete: [MoveWhereUniqueInput!]
+  update: [MoveUpdateWithWhereUniqueWithoutLogInput!]
+  updateMany: [MoveUpdateManyWithWhereNestedInput!]
+  deleteMany: [MoveScalarWhereInput!]
+  upsert: [MoveUpsertWithWhereUniqueWithoutLogInput!]
+}
+
+input MoveUpdateManyWithWhereNestedInput {
+  where: MoveScalarWhereInput!
+  data: MoveUpdateManyDataInput!
+}
+
+input MoveUpdaterepsInput {
+  set: [Int!]
+}
+
+input MoveUpdateweightInput {
+  set: [Int!]
+}
+
+input MoveUpdateWithoutLogDataInput {
+  weight: MoveUpdateweightInput
+  reps: MoveUpdaterepsInput
+}
+
+input MoveUpdateWithWhereUniqueWithoutLogInput {
+  where: MoveWhereUniqueInput!
+  data: MoveUpdateWithoutLogDataInput!
+}
+
+input MoveUpsertWithWhereUniqueWithoutLogInput {
+  where: MoveWhereUniqueInput!
+  update: MoveUpdateWithoutLogDataInput!
+  create: MoveCreateWithoutLogInput!
+}
+
+input MoveWhereInput {
+  """Logical AND on all given filters."""
+  AND: [MoveWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [MoveWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [MoveWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  log: LogWhereInput
+}
+
+input MoveWhereUniqueInput {
+  id: ID
+}
+
 type Mutation {
-  createUser(data: UserCreateInput!): User!
   createMovement(data: MovementCreateInput!): Movement!
-  updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
+  createLog(data: LogCreateInput!): Log!
+  createMove(data: MoveCreateInput!): Move!
+  createUser(data: UserCreateInput!): User!
   updateMovement(data: MovementUpdateInput!, where: MovementWhereUniqueInput!): Movement
-  deleteUser(where: UserWhereUniqueInput!): User
+  updateLog(data: LogUpdateInput!, where: LogWhereUniqueInput!): Log
+  updateMove(data: MoveUpdateInput!, where: MoveWhereUniqueInput!): Move
+  updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   deleteMovement(where: MovementWhereUniqueInput!): Movement
-  upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
+  deleteLog(where: LogWhereUniqueInput!): Log
+  deleteMove(where: MoveWhereUniqueInput!): Move
+  deleteUser(where: UserWhereUniqueInput!): User
   upsertMovement(where: MovementWhereUniqueInput!, create: MovementCreateInput!, update: MovementUpdateInput!): Movement!
-  updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
+  upsertLog(where: LogWhereUniqueInput!, create: LogCreateInput!, update: LogUpdateInput!): Log!
+  upsertMove(where: MoveWhereUniqueInput!, create: MoveCreateInput!, update: MoveUpdateInput!): Move!
+  upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
   updateManyMovements(data: MovementUpdateManyMutationInput!, where: MovementWhereInput): BatchPayload!
-  deleteManyUsers(where: UserWhereInput): BatchPayload!
+  updateManyLogs(data: LogUpdateManyMutationInput!, where: LogWhereInput): BatchPayload!
+  updateManyMoves(data: MoveUpdateManyMutationInput!, where: MoveWhereInput): BatchPayload!
+  updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
   deleteManyMovements(where: MovementWhereInput): BatchPayload!
+  deleteManyLogs(where: LogWhereInput): BatchPayload!
+  deleteManyMoves(where: MoveWhereInput): BatchPayload!
+  deleteManyUsers(where: UserWhereInput): BatchPayload!
 }
 
 enum MutationType {
@@ -400,12 +959,18 @@ enum Permission {
 }
 
 type Query {
-  users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   movements(where: MovementWhereInput, orderBy: MovementOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Movement]!
-  user(where: UserWhereUniqueInput!): User
+  logs(where: LogWhereInput, orderBy: LogOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Log]!
+  moves(where: MoveWhereInput, orderBy: MoveOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Move]!
+  users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   movement(where: MovementWhereUniqueInput!): Movement
-  usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
+  log(where: LogWhereUniqueInput!): Log
+  move(where: MoveWhereUniqueInput!): Move
+  user(where: UserWhereUniqueInput!): User
   movementsConnection(where: MovementWhereInput, orderBy: MovementOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): MovementConnection!
+  logsConnection(where: LogWhereInput, orderBy: LogOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): LogConnection!
+  movesConnection(where: MoveWhereInput, orderBy: MoveOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): MoveConnection!
+  usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
 
   """Fetches an object given its ID"""
   node(
@@ -415,8 +980,10 @@ type Query {
 }
 
 type Subscription {
-  user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
   movement(where: MovementSubscriptionWhereInput): MovementSubscriptionPayload
+  log(where: LogSubscriptionWhereInput): LogSubscriptionPayload
+  move(where: MoveSubscriptionWhereInput): MoveSubscriptionPayload
+  user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
 }
 
 type User implements Node {
@@ -454,6 +1021,11 @@ input UserCreateInput {
   deadLift: Int
   press: Int
   permissions: UserCreatepermissionsInput
+}
+
+input UserCreateOneInput {
+  create: UserCreateInput
+  connect: UserWhereUniqueInput
 }
 
 input UserCreatepermissionsInput {
@@ -549,6 +1121,19 @@ input UserSubscriptionWhereInput {
   node: UserWhereInput
 }
 
+input UserUpdateDataInput {
+  name: String
+  email: String
+  password: String
+  resetToken: String
+  resetTokenExpiry: String
+  benchPress: Int
+  squat: Int
+  deadLift: Int
+  press: Int
+  permissions: UserUpdatepermissionsInput
+}
+
 input UserUpdateInput {
   name: String
   email: String
@@ -575,8 +1160,20 @@ input UserUpdateManyMutationInput {
   permissions: UserUpdatepermissionsInput
 }
 
+input UserUpdateOneRequiredInput {
+  create: UserCreateInput
+  connect: UserWhereUniqueInput
+  update: UserUpdateDataInput
+  upsert: UserUpsertNestedInput
+}
+
 input UserUpdatepermissionsInput {
   set: [Permission!]
+}
+
+input UserUpsertNestedInput {
+  update: UserUpdateDataInput!
+  create: UserCreateInput!
 }
 
 input UserWhereInput {
