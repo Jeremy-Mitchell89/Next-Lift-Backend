@@ -1,5 +1,5 @@
 # source: https://eu1.prisma.sh/jeremy-c-mitchell/Lift/dev
-# timestamp: Tue Jan 08 2019 19:15:33 GMT-0600 (Central Standard Time)
+# timestamp: Thu Jan 10 2019 20:06:42 GMT-0600 (Central Standard Time)
 
 type AggregateLog {
   count: Int!
@@ -302,6 +302,7 @@ scalar Long
 
 type Move implements Node {
   id: ID!
+  name: String!
   weight: [Int!]!
   reps: [Int!]!
   log: Log!
@@ -318,6 +319,7 @@ type MoveConnection {
 }
 
 input MoveCreateInput {
+  name: String!
   weight: MoveCreateweightInput
   reps: MoveCreaterepsInput
   log: LogCreateOneWithoutMovementsInput!
@@ -337,6 +339,7 @@ input MoveCreateweightInput {
 }
 
 input MoveCreateWithoutLogInput {
+  name: String!
   weight: MoveCreateweightInput
   reps: MoveCreaterepsInput
 }
@@ -681,6 +684,8 @@ input MovementWhereUniqueInput {
 enum MoveOrderByInput {
   id_ASC
   id_DESC
+  name_ASC
+  name_DESC
   updatedAt_ASC
   updatedAt_DESC
   createdAt_ASC
@@ -689,6 +694,7 @@ enum MoveOrderByInput {
 
 type MovePreviousValues {
   id: ID!
+  name: String!
   weight: [Int!]!
   reps: [Int!]!
 }
@@ -742,6 +748,46 @@ input MoveScalarWhereInput {
 
   """All values not ending with the given string."""
   id_not_ends_with: ID
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
 }
 
 type MoveSubscriptionPayload {
@@ -784,17 +830,20 @@ input MoveSubscriptionWhereInput {
 }
 
 input MoveUpdateInput {
+  name: String
   weight: MoveUpdateweightInput
   reps: MoveUpdaterepsInput
   log: LogUpdateOneRequiredWithoutMovementsInput
 }
 
 input MoveUpdateManyDataInput {
+  name: String
   weight: MoveUpdateweightInput
   reps: MoveUpdaterepsInput
 }
 
 input MoveUpdateManyMutationInput {
+  name: String
   weight: MoveUpdateweightInput
   reps: MoveUpdaterepsInput
 }
@@ -802,6 +851,7 @@ input MoveUpdateManyMutationInput {
 input MoveUpdateManyWithoutLogInput {
   create: [MoveCreateWithoutLogInput!]
   connect: [MoveWhereUniqueInput!]
+  set: [MoveWhereUniqueInput!]
   disconnect: [MoveWhereUniqueInput!]
   delete: [MoveWhereUniqueInput!]
   update: [MoveUpdateWithWhereUniqueWithoutLogInput!]
@@ -824,6 +874,7 @@ input MoveUpdateweightInput {
 }
 
 input MoveUpdateWithoutLogDataInput {
+  name: String
   weight: MoveUpdateweightInput
   reps: MoveUpdaterepsInput
 }
@@ -888,6 +939,46 @@ input MoveWhereInput {
 
   """All values not ending with the given string."""
   id_not_ends_with: ID
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
   log: LogWhereInput
 }
 

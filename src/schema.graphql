@@ -11,6 +11,7 @@ type Mutation {
     secondaryMuscleWorked: String
   ): Movement!
   createLog(title: String!, notes: String!): Log!
+  createLogMove(name: String!, weight: [Int], reps: [Int]): Move!
 }
 
 type Query {
