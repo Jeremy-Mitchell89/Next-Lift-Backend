@@ -25,6 +25,7 @@ type Query {
     first: Int
     last: Int
   ): [Movement]!
+
   logs(
     where: LogWhereInput
     orderBy: LogOrderByInput
@@ -34,4 +35,6 @@ type Query {
     first: Int
     last: Int
   ): [Log]!
+
+  log(where: LogWhereUniqueInput!): Log
 }

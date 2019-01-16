@@ -40,7 +40,7 @@ type Log {
 type Move {
   id: ID! @unique
   name: String!
-  weight: [Int]!
-  reps: [Int]!
+  weight: [Int]
+  reps: [Int]
   log: Log!
 }

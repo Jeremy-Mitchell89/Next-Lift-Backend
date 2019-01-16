@@ -66,9 +66,15 @@ const mutations = {
     return log;
   },
   async createLogMove(parent, args, ctx, info) {
-    return ctx.db.mutation.createLogMove(
+    console.log(ctx.request.body.variables.id1);
+    return ctx.db.mutation.createMove(
       {
-        data: { log: { connect: { id: args.id } } }
+        data: {
+          name: args.name,
+          reps: { set: [...args.reps] },
+          weight: { set: [...args.weight] },
+          log: { connect: { id: ctx.request.body.variables.id } }
+        }
       },
       info
     );
