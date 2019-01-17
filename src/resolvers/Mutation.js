@@ -37,6 +37,10 @@ const mutations = {
     console.log(user);
     return user;
   },
+  signout(parent, args, ctx, info) {
+    ctx.response.clearCookie("token");
+    return { message: "Goodbye!" };
+  },
   async updateLifts(parent, args, ctx, info) {
     console.log(args);
     return ctx.db.mutation.updateUser(
@@ -64,6 +68,9 @@ const mutations = {
     );
     console.log(log);
     return log;
+  },
+  async deleteLog(parent, args, ctx, info) {
+    return ctx.db.mutation.deleteLog({ where: { id: ctx.request.id } });
   },
   async createLogMove(parent, args, ctx, info) {
     console.log(ctx.request.body.variables.id1);

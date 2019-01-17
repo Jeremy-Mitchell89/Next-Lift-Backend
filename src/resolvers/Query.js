@@ -1,7 +1,9 @@
 const { forwardTo } = require("prisma-binding");
 
 const Query = {
-  logs: forwardTo("db"),
+  logs(parent, args, ctx, info) {
+    return ctx.db.query.logs({ where: { id: ctx.request.id } });
+  },
   movements: forwardTo("db"),
   log: forwardTo("db"),
   me(parent, args, ctx, info) {
