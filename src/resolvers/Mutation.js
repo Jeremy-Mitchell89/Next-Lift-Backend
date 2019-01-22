@@ -42,7 +42,6 @@ const mutations = {
     return { message: "Goodbye!" };
   },
   async updateLifts(parent, args, ctx, info) {
-    console.log(args);
     return ctx.db.mutation.updateUser(
       {
         data: {
@@ -66,14 +65,12 @@ const mutations = {
       },
       info
     );
-    console.log(log);
     return log;
   },
   async deleteLog(parent, args, ctx, info) {
-    return ctx.db.mutation.deleteLog({ where: { id: ctx.request.id } });
+    return ctx.db.mutation.deleteLog({ where: { id: args.id }, info });
   },
   async createLogMove(parent, args, ctx, info) {
-    console.log(ctx.request.body.variables.id1);
     return ctx.db.mutation.createMove(
       {
         data: {
@@ -85,6 +82,9 @@ const mutations = {
       },
       info
     );
+  },
+  async deleteMove(parent, args, ctx, info) {
+    return ctx.db.mutation.deleteMove({ where: { id: args.id }, info });
   }
 };
 

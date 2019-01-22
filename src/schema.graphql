@@ -16,6 +16,7 @@ type Mutation {
   createLogMove(name: String!, weight: [Int], reps: [Int]): Move!
   signout: SuccessMessage
   deleteLog(id: ID!): Log
+  deleteMove(id: ID!): Move
 }
 
 type Query {
