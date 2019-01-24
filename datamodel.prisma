@@ -34,7 +34,7 @@ type Log {
   title: String!
   notes: String!
   movements: [Move]
-  user: User!
+  user: User
 }
 
 type Move {
