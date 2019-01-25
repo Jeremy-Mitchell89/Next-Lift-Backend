@@ -68,6 +68,12 @@ const mutations = {
     return log;
   },
   async deleteLog(parent, args, ctx, info) {
+    const moves = await ctx.db.query.moves({
+      where: { log: { id: args.id } }
+    });
+    moveIds = moves.map(move => move.id);
+    console.log(moveIds);
+    await ctx.db.mutation.deleteManyMoves({ where: { id_in: moveIds } });
     return ctx.db.mutation.deleteLog({ where: { id: args.id }, info });
   },
   async createLogMove(parent, args, ctx, info) {

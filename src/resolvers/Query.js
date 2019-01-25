@@ -1,8 +1,12 @@
 const { forwardTo } = require("prisma-binding");
 
 const Query = {
-  logs(parent, args, ctx, info) {
-    return ctx.db.query.logs({ where: { id: ctx.request.id } });
+  async myLogs(parent, args, ctx, info) {
+    const logs = await ctx.db.query.logs({
+      where: { user: { id: ctx.request.userId } },
+      info
+    });
+    return logs;
   },
   movements: forwardTo("db"),
   log: forwardTo("db"),
@@ -17,7 +21,8 @@ const Query = {
       },
       info
     );
-  }
+  },
+  logs: forwardTo("db")
 };
 
 module.exports = Query;
