@@ -17,6 +17,7 @@ type Mutation {
   signout: SuccessMessage
   deleteLog(id: ID!): Log
   deleteMove(id: ID!): Move
+  createWeight(weight: Int!): Weight
 }
 
 type Query {
@@ -30,7 +31,7 @@ type Query {
     first: Int
     last: Int
   ): [Movement]!
-  myLogs(where: LogWhereInput): [Log]
+  myLogs(where: LogWhereInput, orderBy: LogOrderByInput): [Log]
   log(where: LogWhereUniqueInput!): Log
   logs(
     where: LogWhereInput

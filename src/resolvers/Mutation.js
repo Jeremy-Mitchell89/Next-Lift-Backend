@@ -91,6 +91,22 @@ const mutations = {
   },
   async deleteMove(parent, args, ctx, info) {
     return ctx.db.mutation.deleteMove({ where: { id: args.id }, info });
+  },
+  async createWeight(parent, args, ctx, info) {
+    const weight = await ctx.db.mutation.createWeight(
+      {
+        data: {
+          user: {
+            connect: {
+              id: ctx.request.userId
+            }
+          },
+          ...args
+        }
+      },
+      info
+    );
+    return weight;
   }
 };
 

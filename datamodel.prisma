@@ -20,6 +20,11 @@ type User {
   deadLift: Int @default(value: "100")
   press: Int @default(value: "100")
 }
+type Weight {
+  weight: Int!
+  createdAt: DateTime!
+  user: User!
+}
 
 type Movement {
   id: ID! @unique
@@ -35,6 +40,7 @@ type Log {
   notes: String!
   movements: [Move]
   user: User
+  createdAt: DateTime! @createdAt
 }
 
 type Move {

@@ -1,5 +1,5 @@
 # source: https://eu1.prisma.sh/jeremy-c-mitchell/Lift/dev
-# timestamp: Wed Jan 23 2019 18:50:38 GMT-0600 (Central Standard Time)
+# timestamp: Sat Jan 26 2019 16:18:28 GMT-0600 (Central Standard Time)
 
 type AggregateLog {
   count: Int!
@@ -17,10 +17,16 @@ type AggregateUser {
   count: Int!
 }
 
+type AggregateWeight {
+  count: Int!
+}
+
 type BatchPayload {
   """The number of nodes that have been affected by the Batch operation."""
   count: Long!
 }
+
+scalar DateTime
 
 type Log implements Node {
   id: ID!
@@ -28,6 +34,7 @@ type Log implements Node {
   notes: String!
   movements(where: MoveWhereInput, orderBy: MoveOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Move!]
   user: User
+  createdAt: DateTime!
 }
 
 """A connection to a list of items."""
@@ -74,16 +81,17 @@ enum LogOrderByInput {
   title_DESC
   notes_ASC
   notes_DESC
-  updatedAt_ASC
-  updatedAt_DESC
   createdAt_ASC
   createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
 }
 
 type LogPreviousValues {
   id: ID!
   title: String!
   notes: String!
+  createdAt: DateTime!
 }
 
 type LogSubscriptionPayload {
@@ -284,6 +292,28 @@ input LogWhereInput {
 
   """All values not ending with the given string."""
   notes_not_ends_with: String
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
   movements_every: MoveWhereInput
   movements_some: MoveWhereInput
   movements_none: MoveWhereInput
@@ -987,6 +1017,7 @@ input MoveWhereUniqueInput {
 }
 
 type Mutation {
+  createWeight(data: WeightCreateInput!): Weight!
   createMovement(data: MovementCreateInput!): Movement!
   createLog(data: LogCreateInput!): Log!
   createMove(data: MoveCreateInput!): Move!
@@ -1003,10 +1034,12 @@ type Mutation {
   upsertLog(where: LogWhereUniqueInput!, create: LogCreateInput!, update: LogUpdateInput!): Log!
   upsertMove(where: MoveWhereUniqueInput!, create: MoveCreateInput!, update: MoveUpdateInput!): Move!
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
+  updateManyWeights(data: WeightUpdateManyMutationInput!, where: WeightWhereInput): BatchPayload!
   updateManyMovements(data: MovementUpdateManyMutationInput!, where: MovementWhereInput): BatchPayload!
   updateManyLogs(data: LogUpdateManyMutationInput!, where: LogWhereInput): BatchPayload!
   updateManyMoves(data: MoveUpdateManyMutationInput!, where: MoveWhereInput): BatchPayload!
   updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
+  deleteManyWeights(where: WeightWhereInput): BatchPayload!
   deleteManyMovements(where: MovementWhereInput): BatchPayload!
   deleteManyLogs(where: LogWhereInput): BatchPayload!
   deleteManyMoves(where: MoveWhereInput): BatchPayload!
@@ -1050,6 +1083,7 @@ enum Permission {
 }
 
 type Query {
+  weights(where: WeightWhereInput, orderBy: WeightOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Weight]!
   movements(where: MovementWhereInput, orderBy: MovementOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Movement]!
   logs(where: LogWhereInput, orderBy: LogOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Log]!
   moves(where: MoveWhereInput, orderBy: MoveOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Move]!
@@ -1058,6 +1092,7 @@ type Query {
   log(where: LogWhereUniqueInput!): Log
   move(where: MoveWhereUniqueInput!): Move
   user(where: UserWhereUniqueInput!): User
+  weightsConnection(where: WeightWhereInput, orderBy: WeightOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): WeightConnection!
   movementsConnection(where: MovementWhereInput, orderBy: MovementOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): MovementConnection!
   logsConnection(where: LogWhereInput, orderBy: LogOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): LogConnection!
   movesConnection(where: MoveWhereInput, orderBy: MoveOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): MoveConnection!
@@ -1071,6 +1106,7 @@ type Query {
 }
 
 type Subscription {
+  weight(where: WeightSubscriptionWhereInput): WeightSubscriptionPayload
   movement(where: MovementSubscriptionWhereInput): MovementSubscriptionPayload
   log(where: LogSubscriptionWhereInput): LogSubscriptionPayload
   move(where: MoveSubscriptionWhereInput): MoveSubscriptionPayload
@@ -1611,4 +1647,149 @@ input UserWhereInput {
 input UserWhereUniqueInput {
   id: ID
   email: String
+}
+
+type Weight {
+  weight: Int!
+  createdAt: DateTime!
+  user: User!
+}
+
+"""A connection to a list of items."""
+type WeightConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [WeightEdge]!
+  aggregate: AggregateWeight!
+}
+
+input WeightCreateInput {
+  weight: Int!
+  user: UserCreateOneInput!
+}
+
+"""An edge in a connection."""
+type WeightEdge {
+  """The item at the end of the edge."""
+  node: Weight!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum WeightOrderByInput {
+  weight_ASC
+  weight_DESC
+  createdAt_ASC
+  createdAt_DESC
+  id_ASC
+  id_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type WeightPreviousValues {
+  weight: Int!
+  createdAt: DateTime!
+}
+
+type WeightSubscriptionPayload {
+  mutation: MutationType!
+  node: Weight
+  updatedFields: [String!]
+  previousValues: WeightPreviousValues
+}
+
+input WeightSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [WeightSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [WeightSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [WeightSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: WeightWhereInput
+}
+
+input WeightUpdateManyMutationInput {
+  weight: Int
+}
+
+input WeightWhereInput {
+  """Logical AND on all given filters."""
+  AND: [WeightWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [WeightWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [WeightWhereInput!]
+  weight: Int
+
+  """All values that are not equal to given value."""
+  weight_not: Int
+
+  """All values that are contained in given list."""
+  weight_in: [Int!]
+
+  """All values that are not contained in given list."""
+  weight_not_in: [Int!]
+
+  """All values less than the given value."""
+  weight_lt: Int
+
+  """All values less than or equal the given value."""
+  weight_lte: Int
+
+  """All values greater than the given value."""
+  weight_gt: Int
+
+  """All values greater than or equal the given value."""
+  weight_gte: Int
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  user: UserWhereInput
 }
