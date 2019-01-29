@@ -42,4 +42,13 @@ type Query {
     first: Int
     last: Int
   ): [Log]!
+  weights(
+    where: WeightWhereInput
+    orderBy: WeightOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): [Weight]!
 }

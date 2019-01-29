@@ -22,7 +22,14 @@ const Query = {
       info
     );
   },
-  logs: forwardTo("db")
+  logs: forwardTo("db"),
+  async weights(parent, args, ctx, info) {
+    const weights = await ctx.db.query.weights({
+      where: { user: { id: ctx.request.userId } },
+      info
+    });
+    return weights;
+  }
 };
 
 module.exports = Query;
