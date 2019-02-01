@@ -21,6 +21,7 @@ type User {
   press: Int @default(value: "100")
 }
 type Weight {
+  id: ID! @unique
   weight: Int!
   createdAt: DateTime!
   user: User!

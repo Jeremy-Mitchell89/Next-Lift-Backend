@@ -107,6 +107,9 @@ const mutations = {
       info
     );
     return weight;
+  },
+  async deleteWeight(parent, args, ctx, info) {
+    return ctx.db.mutation.deleteWeight({ where: { id: args.id }, info });
   }
 };
 

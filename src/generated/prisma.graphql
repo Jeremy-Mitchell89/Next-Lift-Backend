@@ -1,5 +1,5 @@
 # source: https://eu1.prisma.sh/jeremy-c-mitchell/Lift/dev
-# timestamp: Sat Jan 26 2019 16:18:28 GMT-0600 (Central Standard Time)
+# timestamp: Thu Jan 31 2019 17:58:15 GMT-0600 (Central Standard Time)
 
 type AggregateLog {
   count: Int!
@@ -1022,14 +1022,17 @@ type Mutation {
   createLog(data: LogCreateInput!): Log!
   createMove(data: MoveCreateInput!): Move!
   createUser(data: UserCreateInput!): User!
+  updateWeight(data: WeightUpdateInput!, where: WeightWhereUniqueInput!): Weight
   updateMovement(data: MovementUpdateInput!, where: MovementWhereUniqueInput!): Movement
   updateLog(data: LogUpdateInput!, where: LogWhereUniqueInput!): Log
   updateMove(data: MoveUpdateInput!, where: MoveWhereUniqueInput!): Move
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
+  deleteWeight(where: WeightWhereUniqueInput!): Weight
   deleteMovement(where: MovementWhereUniqueInput!): Movement
   deleteLog(where: LogWhereUniqueInput!): Log
   deleteMove(where: MoveWhereUniqueInput!): Move
   deleteUser(where: UserWhereUniqueInput!): User
+  upsertWeight(where: WeightWhereUniqueInput!, create: WeightCreateInput!, update: WeightUpdateInput!): Weight!
   upsertMovement(where: MovementWhereUniqueInput!, create: MovementCreateInput!, update: MovementUpdateInput!): Movement!
   upsertLog(where: LogWhereUniqueInput!, create: LogCreateInput!, update: LogUpdateInput!): Log!
   upsertMove(where: MoveWhereUniqueInput!, create: MoveCreateInput!, update: MoveUpdateInput!): Move!
@@ -1088,6 +1091,7 @@ type Query {
   logs(where: LogWhereInput, orderBy: LogOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Log]!
   moves(where: MoveWhereInput, orderBy: MoveOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Move]!
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
+  weight(where: WeightWhereUniqueInput!): Weight
   movement(where: MovementWhereUniqueInput!): Movement
   log(where: LogWhereUniqueInput!): Log
   move(where: MoveWhereUniqueInput!): Move
@@ -1292,6 +1296,13 @@ input UserUpdateOneInput {
   connect: UserWhereUniqueInput
   disconnect: Boolean
   delete: Boolean
+  update: UserUpdateDataInput
+  upsert: UserUpsertNestedInput
+}
+
+input UserUpdateOneRequiredInput {
+  create: UserCreateInput
+  connect: UserWhereUniqueInput
   update: UserUpdateDataInput
   upsert: UserUpsertNestedInput
 }
@@ -1649,7 +1660,8 @@ input UserWhereUniqueInput {
   email: String
 }
 
-type Weight {
+type Weight implements Node {
+  id: ID!
   weight: Int!
   createdAt: DateTime!
   user: User!
@@ -1680,17 +1692,18 @@ type WeightEdge {
 }
 
 enum WeightOrderByInput {
+  id_ASC
+  id_DESC
   weight_ASC
   weight_DESC
   createdAt_ASC
   createdAt_DESC
-  id_ASC
-  id_DESC
   updatedAt_ASC
   updatedAt_DESC
 }
 
 type WeightPreviousValues {
+  id: ID!
   weight: Int!
   createdAt: DateTime!
 }
@@ -1734,6 +1747,11 @@ input WeightSubscriptionWhereInput {
   node: WeightWhereInput
 }
 
+input WeightUpdateInput {
+  weight: Int
+  user: UserUpdateOneRequiredInput
+}
+
 input WeightUpdateManyMutationInput {
   weight: Int
 }
@@ -1747,6 +1765,46 @@ input WeightWhereInput {
 
   """Logical NOT on all given filters combined by AND."""
   NOT: [WeightWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
   weight: Int
 
   """All values that are not equal to given value."""
@@ -1792,4 +1850,8 @@ input WeightWhereInput {
   """All values greater than or equal the given value."""
   createdAt_gte: DateTime
   user: UserWhereInput
+}
+
+input WeightWhereUniqueInput {
+  id: ID
 }

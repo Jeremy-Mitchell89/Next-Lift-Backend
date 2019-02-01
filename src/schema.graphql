@@ -18,8 +18,8 @@ type Mutation {
   deleteLog(id: ID!): Log
   deleteMove(id: ID!): Move
   createWeight(weight: Int!): Weight
+  deleteWeight(id: ID!): Weight!
 }
-
 type Query {
   me: User
   movements(
