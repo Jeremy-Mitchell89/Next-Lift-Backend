@@ -1,5 +1,5 @@
-# source: https://eu1.prisma.sh/jeremy-c-mitchell/Lift/dev
-# timestamp: Thu Jan 31 2019 17:58:15 GMT-0600 (Central Standard Time)
+# source: https://lift-production-e2bd0cdc66.herokuapp.com/lift-production/prod
+# timestamp: Sun Feb 03 2019 18:04:45 GMT-0600 (Central Standard Time)
 
 type AggregateLog {
   count: Int!
@@ -881,7 +881,6 @@ input MoveUpdateManyMutationInput {
 input MoveUpdateManyWithoutLogInput {
   create: [MoveCreateWithoutLogInput!]
   connect: [MoveWhereUniqueInput!]
-  set: [MoveWhereUniqueInput!]
   disconnect: [MoveWhereUniqueInput!]
   delete: [MoveWhereUniqueInput!]
   update: [MoveUpdateWithWhereUniqueWithoutLogInput!]

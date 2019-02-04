@@ -11,7 +11,7 @@ const mutations = {
       },
       info
     );
-    const token = jwt.sign({ userId: user.id }, "test"); //MOVE SECRET KEY 'test' TO ENV FILE IF NOT IN DEV
+    const token = jwt.sign({ userId: user.id }, process.env.APP_SECRET);
     ctx.response.cookie("token", token, {
       maxAge: 1000 * 60 * 60 * 24 * 365,
       httpOnly: true
@@ -29,7 +29,7 @@ const mutations = {
     if (!valid) {
       throw new Error("Password is invalid");
     }
-    const token = jwt.sign({ userId: user.id }, "test");
+    const token = jwt.sign({ userId: user.id }, process.env.APP_SECRET);
     ctx.response.cookie("token", token, {
       maxAge: 1000 * 60 * 60 * 24 * 365,
       httpOnly: true
