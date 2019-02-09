@@ -16,7 +16,6 @@ const mutations = {
       maxAge: 1000 * 60 * 60 * 24 * 365,
       httpOnly: true
     });
-    console.log(user);
     return user;
   },
   async signin(parent, args, ctx, info) {
@@ -55,6 +54,21 @@ const mutations = {
       info
     );
   },
+  async updateMovement(parent, args, ctx, info) {
+    console.log(args);
+    return ctx.db.mutation.updateMovement(
+      {
+        data: {
+          name: args.name,
+          description: args.description,
+          primaryMuscleWorked: args.primaryMuscleWorked,
+          secondaryMuscleWorked: args.secondaryMuscleWorked
+        },
+        where: { id: args.id }
+      },
+      info
+    );
+  },
   async createMove(parent, args, ctx, info) {
     return ctx.db.mutation.createMovement({ data: { ...args } }, info);
   },
@@ -72,7 +86,6 @@ const mutations = {
       where: { log: { id: args.id } }
     });
     moveIds = moves.map(move => move.id);
-    console.log(moveIds);
     await ctx.db.mutation.deleteManyMoves({ where: { id_in: moveIds } });
     return ctx.db.mutation.deleteLog({ where: { id: args.id }, info });
   },
@@ -91,6 +104,9 @@ const mutations = {
   },
   async deleteMove(parent, args, ctx, info) {
     return ctx.db.mutation.deleteMove({ where: { id: args.id }, info });
+  },
+  async deleteMovement(parent, args, ctx, info) {
+    return ctx.db.mutation.deleteMovement({ where: { id: args.id }, info });
   },
   async createWeight(parent, args, ctx, info) {
     const weight = await ctx.db.mutation.createWeight(

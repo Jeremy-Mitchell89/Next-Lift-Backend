@@ -12,6 +12,14 @@ type Mutation {
     primaryMuscleWorked: String!
     secondaryMuscleWorked: String
   ): Movement!
+  deleteMovement(id: ID!): Movement
+  updateMovement(
+    id: ID!
+    name: String
+    description: String
+    primaryMuscleWorked: String
+    secondaryMuscleWorked: String
+  ): Movement!
   createLog(title: String!, notes: String!): Log!
   createLogMove(name: String!, weight: [Int], reps: [Int]): Move!
   signout: SuccessMessage
@@ -51,4 +59,5 @@ type Query {
     first: Int
     last: Int
   ): [Weight]!
+  movement(where: MovementWhereUniqueInput!): Movement
 }

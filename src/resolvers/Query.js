@@ -29,7 +29,8 @@ const Query = {
       info
     });
     return weights;
-  }
+  },
+  movement: forwardTo("db")
 };
 
 module.exports = Query;
