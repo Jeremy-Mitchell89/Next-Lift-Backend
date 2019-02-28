@@ -102,6 +102,17 @@ const mutations = {
       info
     );
   },
+  async editLogMove(parent, args, ctx, info) {
+    console.log(args.id);
+    return ctx.db.mutation.updateMove({
+      data: {
+        weight: { set: [...args.weight] },
+        reps: { set: [...args.reps] }
+      },
+      where: { id: args.id },
+      info
+    });
+  },
   async deleteMove(parent, args, ctx, info) {
     return ctx.db.mutation.deleteMove({ where: { id: args.id }, info });
   },
