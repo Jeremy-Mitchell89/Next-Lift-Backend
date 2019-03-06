@@ -1,5 +1,5 @@
-#endpoint: ${env:PRISMA_ENDPOINT}
-endpoint: https://lift-production-e2bd0cdc66.herokuapp.com/lift-production/prod
+endpoint: https://eu1.prisma.sh/jeremy-c-mitchell/Lift/dev
+# endpoint: https://lift-production-e2bd0cdc66.herokuapp.com/lift-production/prod
 datamodel: datamodel.prisma
 secret: ${env:PRISMA_SECRET}
 hooks:

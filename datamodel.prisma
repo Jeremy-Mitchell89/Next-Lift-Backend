@@ -39,6 +39,7 @@ type Log {
   id: ID! @unique
   title: String!
   notes: String!
+  date: String
   movements: [Move]
   user: User
   createdAt: DateTime! @createdAt

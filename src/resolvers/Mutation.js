@@ -55,7 +55,6 @@ const mutations = {
     );
   },
   async updateMovement(parent, args, ctx, info) {
-    console.log(args);
     return ctx.db.mutation.updateMovement(
       {
         data: {
@@ -102,8 +101,20 @@ const mutations = {
       info
     );
   },
+  async DuplicateLogMoves(parent, args, ctx, info) {
+    return ctx.db.mutation.createMove(
+      {
+        data: {
+          name: args.name,
+          reps: { set: [...args.reps] },
+          weight: { set: [...args.weight] },
+          log: { connect: { id: args.logId } }
+        }
+      },
+      info
+    );
+  },
   async editLogMove(parent, args, ctx, info) {
-    console.log(args.id);
     return ctx.db.mutation.updateMove({
       data: {
         weight: { set: [...args.weight] },

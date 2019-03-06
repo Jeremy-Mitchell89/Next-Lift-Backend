@@ -1,5 +1,5 @@
-# source: https://lift-production-e2bd0cdc66.herokuapp.com/lift-production/prod
-# timestamp: Sun Feb 03 2019 18:04:45 GMT-0600 (Central Standard Time)
+# source: https://eu1.prisma.sh/jeremy-c-mitchell/Lift/dev
+# timestamp: Mon Mar 04 2019 19:22:17 GMT-0600 (Central Standard Time)
 
 type AggregateLog {
   count: Int!
@@ -32,6 +32,7 @@ type Log implements Node {
   id: ID!
   title: String!
   notes: String!
+  date: String
   movements(where: MoveWhereInput, orderBy: MoveOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Move!]
   user: User
   createdAt: DateTime!
@@ -50,6 +51,7 @@ type LogConnection {
 input LogCreateInput {
   title: String!
   notes: String!
+  date: String
   movements: MoveCreateManyWithoutLogInput
   user: UserCreateOneInput
 }
@@ -62,6 +64,7 @@ input LogCreateOneWithoutMovementsInput {
 input LogCreateWithoutMovementsInput {
   title: String!
   notes: String!
+  date: String
   user: UserCreateOneInput
 }
 
@@ -81,6 +84,8 @@ enum LogOrderByInput {
   title_DESC
   notes_ASC
   notes_DESC
+  date_ASC
+  date_DESC
   createdAt_ASC
   createdAt_DESC
   updatedAt_ASC
@@ -91,6 +96,7 @@ type LogPreviousValues {
   id: ID!
   title: String!
   notes: String!
+  date: String
   createdAt: DateTime!
 }
 
@@ -136,6 +142,7 @@ input LogSubscriptionWhereInput {
 input LogUpdateInput {
   title: String
   notes: String
+  date: String
   movements: MoveUpdateManyWithoutLogInput
   user: UserUpdateOneInput
 }
@@ -143,6 +150,7 @@ input LogUpdateInput {
 input LogUpdateManyMutationInput {
   title: String
   notes: String
+  date: String
 }
 
 input LogUpdateOneRequiredWithoutMovementsInput {
@@ -155,6 +163,7 @@ input LogUpdateOneRequiredWithoutMovementsInput {
 input LogUpdateWithoutMovementsDataInput {
   title: String
   notes: String
+  date: String
   user: UserUpdateOneInput
 }
 
@@ -292,6 +301,46 @@ input LogWhereInput {
 
   """All values not ending with the given string."""
   notes_not_ends_with: String
+  date: String
+
+  """All values that are not equal to given value."""
+  date_not: String
+
+  """All values that are contained in given list."""
+  date_in: [String!]
+
+  """All values that are not contained in given list."""
+  date_not_in: [String!]
+
+  """All values less than the given value."""
+  date_lt: String
+
+  """All values less than or equal the given value."""
+  date_lte: String
+
+  """All values greater than the given value."""
+  date_gt: String
+
+  """All values greater than or equal the given value."""
+  date_gte: String
+
+  """All values containing the given string."""
+  date_contains: String
+
+  """All values not containing the given string."""
+  date_not_contains: String
+
+  """All values starting with the given string."""
+  date_starts_with: String
+
+  """All values not starting with the given string."""
+  date_not_starts_with: String
+
+  """All values ending with the given string."""
+  date_ends_with: String
+
+  """All values not ending with the given string."""
+  date_not_ends_with: String
   createdAt: DateTime
 
   """All values that are not equal to given value."""
@@ -881,6 +930,7 @@ input MoveUpdateManyMutationInput {
 input MoveUpdateManyWithoutLogInput {
   create: [MoveCreateWithoutLogInput!]
   connect: [MoveWhereUniqueInput!]
+  set: [MoveWhereUniqueInput!]
   disconnect: [MoveWhereUniqueInput!]
   delete: [MoveWhereUniqueInput!]
   update: [MoveUpdateWithWhereUniqueWithoutLogInput!]
