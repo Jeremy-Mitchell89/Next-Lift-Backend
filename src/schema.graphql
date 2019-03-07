@@ -20,7 +20,6 @@ type Mutation {
     primaryMuscleWorked: String
     secondaryMuscleWorked: String
   ): Movement!
-
   createLog(title: String!, notes: String!, date: String!): Log!
   createLogMove(name: String!, weight: [Int], reps: [Int]): Move!
   DuplicateLogMoves(
@@ -35,6 +34,7 @@ type Mutation {
   deleteMove(id: ID!): Move
   createWeight(weight: Int!): Weight
   deleteWeight(id: ID!): Weight!
+  updateLog(id: ID!, title: String, notes: String, date: String): Log
 }
 type Query {
   me: User

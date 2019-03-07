@@ -148,6 +148,13 @@ const mutations = {
   },
   async deleteWeight(parent, args, ctx, info) {
     return ctx.db.mutation.deleteWeight({ where: { id: args.id }, info });
+  },
+  async updateLog(parent, args, ctx, info) {
+    console.log(args);
+    return ctx.db.mutation.updateLog({
+      data: { title: args.title, notes: args.notes, date: args.date },
+      where: { id: args.id }
+    });
   }
 };
 
