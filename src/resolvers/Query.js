@@ -4,6 +4,7 @@ const Query = {
   async myLogs(parent, args, ctx, info) {
     const logs = await ctx.db.query.logs({
       where: { user: { id: ctx.request.userId } },
+      orderBy: "createdAt_DESC",
       info
     });
     return logs;
@@ -26,6 +27,7 @@ const Query = {
   async weights(parent, args, ctx, info) {
     const weights = await ctx.db.query.weights({
       where: { user: { id: ctx.request.userId } },
+      orderBy: "createdAt_DESC",
       info
     });
     return weights;
